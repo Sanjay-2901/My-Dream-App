@@ -1,1 +1,19 @@
-<p>recipe-list works!</p>
+<div>
+  <button class="btn btn-success">New Recipe</button>
+</div>
+<hr />
+<div>
+  <a
+    href="#"
+    *ngFor="let i of recipesList"
+    class="list-group-item d-flex justify-content-between"
+  >
+    <div class="pull-left">
+      <h3>{{ i.name }}</h3>
+      <p>{{ i.description }}</p>
+    </div>
+    <div class="pull-right">
+      <img [src]="i.imageUrl" alt="img" height="80" />
+    </div>
+  </a>
+</div>
