@@ -1,5 +1,5 @@
-<app-header></app-header>
+<app-header (feature)="onNav($event)"></app-header>
 <div class="row" class="app-comp-style">
-  <app-recipes></app-recipes>
-  <app-shopping-list></app-shopping-list>
+  <app-recipes *ngIf="feature == 'rec'"></app-recipes>
+  <app-shopping-list *ngIf="feature == 'shop'"></app-shopping-list>
 </div>

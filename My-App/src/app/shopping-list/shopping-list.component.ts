@@ -12,4 +12,10 @@ export class ShoppingListComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  itemAdded(recievedItem: Ingredient) {
+    if (recievedItem.name !== '' && recievedItem.amount !== undefined) {
+      this.ingredients.push(recievedItem);
+    }
+  }
 }
