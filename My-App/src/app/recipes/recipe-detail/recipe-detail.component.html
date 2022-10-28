@@ -11,11 +11,17 @@
       Manage Recipe
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" myDropDown>
-      <li><a class="dropdown-item" href="#">To Shopping List</a></li>
+      <li><a class="dropdown-item" (click)="onAddtoShoppingList()">To Shopping List</a></li>
       <li><a class="dropdown-item" href="#">Edit Recipe</a></li>
       <li><a class="dropdown-item" href="#">Delete Recipe</a></li>
     </ul>
   </div>
   <p>{{ selectedRecipeItem.description }}</p>
-  <p>Ingredients</p>
+  <div>
+    <ul>
+      <li *ngFor="let i of selectedRecipeItem.ingredients">
+        {{ i.name }} - {{ i.amount }}
+      </li>
+    </ul>
+  </div>
 </div>
