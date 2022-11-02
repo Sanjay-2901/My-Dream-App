@@ -11,9 +11,13 @@
       Manage Recipe
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" myDropDown>
-      <li><a class="dropdown-item" (click)="onAddtoShoppingList()">To Shopping List</a></li>
-      <li><a class="dropdown-item" href="#">Edit Recipe</a></li>
-      <li><a class="dropdown-item" href="#">Delete Recipe</a></li>
+      <li>
+        <a class="dropdown-item" (click)="onAddtoShoppingList()"
+          >To Shopping List</a
+        >
+      </li>
+      <li><a class="dropdown-item" (click)="onEditRecipe()">Edit Recipe</a></li>
+      <li><a class="dropdown-item">Delete Recipe</a></li>
     </ul>
   </div>
   <p>{{ selectedRecipeItem.description }}</p>

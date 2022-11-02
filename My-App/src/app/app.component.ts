@@ -5,9 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  feature: string = 'rec';
-  onNav(data: string) {
-    this.feature = data;
-  }
-}
+export class AppComponent {}
