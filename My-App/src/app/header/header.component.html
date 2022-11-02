@@ -17,14 +17,16 @@
         <li class="nav-item me-5">
           <a
             class="nav-link active fw-bold"
-            aria-current="page"
-            href="#"
-            (click)="onClickingNav('rec')"
+            routerLink="/recipes"
+            routerLinkActive="active1"
             >Recipes</a
           >
         </li>
         <li class="nav-item me-5">
-          <a class="nav-link fw-bold" href="#" (click)="onClickingNav('shop')"
+          <a
+            class="nav-link fw-bold"
+            routerLink="/shopping-list"
+            routerLinkActive="active1"
             >Shopping List</a
           >
         </li>
@@ -40,8 +42,8 @@
             Manage
           </a>
           <ul class="dropdown-menu" myDropDown>
-            <li><a class="dropdown-item" href="#">Save Data</a></li>
-            <li><a class="dropdown-item" href="#">Fetch Data</a></li>
+            <li><a class="dropdown-item">Save Data</a></li>
+            <li><a class="dropdown-item">Fetch Data</a></li>
           </ul>
         </li>
       </ul>

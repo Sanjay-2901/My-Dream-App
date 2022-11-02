@@ -1,7 +1,11 @@
 <div>
-  <button class="btn btn-success">New Recipe</button>
+  <button class="btn btn-success" (click)="onNewRecipe()">New Recipe</button>
 </div>
 <hr />
 <div>
-  <app-recipe-item *ngFor="let i of recipesList" [recipe]="i"></app-recipe-item>
+  <app-recipe-item
+    *ngFor="let i of recipesList; let j = index"
+    [recipe]="i"
+    [index]="j"
+  ></app-recipe-item>
 </div>

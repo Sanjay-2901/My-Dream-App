@@ -1,4 +1,8 @@
-<a href="#" class="list-group-item d-flex justify-content-between" (click)="onClickingRecipe()">
+<a
+  class="list-group-item d-flex justify-content-between"
+  [routerLink]="[index]"
+  routerLinkActive="recipe-item-background"
+>
   <div class="pull-left">
     <h3>{{ recipe.name }}</h3>
     <p>{{ recipe.description }}</p>
