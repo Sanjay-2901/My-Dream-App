@@ -2,6 +2,11 @@
   <div>
     <app-recipe-list></app-recipe-list>
   </div>
+  <div>
+    <button class="btn btn-success me-3" (click)="login()">Login</button>
+    <button class="btn btn-danger" (click)="logout()">LogOut</button>
+    <p>Login to navigate to Shopping List</p>
+  </div>
 
   <router-outlet></router-outlet>
 </div>

@@ -13,6 +13,10 @@ import { DropDown } from './shared/dropdown.directive';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
+import { AuthGuard } from './auth-guard.service';
+import { AuthService } from './auth.service';
+import { canDeactivateGuard } from './can-deactivate-guard.service';
+import { ResolveGuard } from './resolve-guard.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,13 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
     RecipeEditComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
-  providers: [ShoppingListService],
+  providers: [
+    ShoppingListService,
+    AuthGuard,
+    AuthService,
+    canDeactivateGuard,
+    ResolveGuard,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
