@@ -17,6 +17,7 @@ import { AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth.service';
 import { canDeactivateGuard } from './can-deactivate-guard.service';
 import { ResolveGuard } from './resolve-guard.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { ResolveGuard } from './resolve-guard.service';
     RecipeStartComponent,
     RecipeEditComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [
     ShoppingListService,
     AuthGuard,
