@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Recipe } from './recipe.model';
@@ -6,6 +7,7 @@ import { Recipe } from './recipe.model';
 @Injectable({ providedIn: 'root' })
 export class RecipeService {
   recipeSelected = new EventEmitter<Recipe>();
+  reicpesChanged = new Subject<Recipe[]>();
 
   private recipes: Recipe[] = [
     new Recipe('Tea', 'Just a Test', '/assets/images/ai-lab.webp', [
@@ -18,7 +20,7 @@ export class RecipeService {
     ]),
   ];
 
-  constructor(private slService: ShoppingListService) {}
+  constructor( private slService: ShoppingListService) {}
 
   getRecipes() {
     return this.recipes.slice();
@@ -30,5 +32,20 @@ export class RecipeService {
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.slService.addIngredients(ingredients);
+  }
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.reicpesChanged.next(this.recipes.slice());
+  }
+
+  updateRecipe(index: number, recipe: Recipe) {
+    this.recipes[index] = recipe;
+    this.reicpesChanged.next(this.recipes.slice());
+  }
+
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
+    this.reicpesChanged.next(this.recipes.slice());
   }
 }
