@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { relative } from 'path';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 
@@ -38,5 +37,10 @@ export class RecipeDetailComponent implements OnInit {
       relativeTo: this.activatedRoute,
     });
     // here we are going one step up and giving 'id' and 'edit'.
+  }
+
+  onDeleteRecipe() {
+    this.recipeService.deleteRecipe(this.id);
+    this.router.navigate(['../'], { relativeTo: this.activatedRoute });
   }
 }
