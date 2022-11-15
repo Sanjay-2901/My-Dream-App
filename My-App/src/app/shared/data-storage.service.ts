@@ -1,16 +1,18 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RecipeService } from '../recipes/recipe.service';
 import { Recipe } from '../recipes/recipe.model';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, take } from 'rxjs/operators';
+import { AuthenticationService } from '../authentication/authentication.service';
 
 @Injectable({ providedIn: 'root' })
-export class DataStorageService implements OnInit {
-  constructor(private http: HttpClient, private recipeService: RecipeService) {}
-
-  ngOnInit() {
-    this.fetchRecipes();
-  }
+export class DataStorageService {
+  constructor(
+    private http: HttpClient,
+    private recipeService: RecipeService,
+    private authenticationService: AuthenticationService
+  ) {}
+  token: string | null = null;
 
   storeRecipes() {
     const recipes = this.recipeService.getRecipes();
@@ -25,7 +27,12 @@ export class DataStorageService implements OnInit {
   }
 
   fetchRecipes() {
-   return this.http
+    // this.authenticationService.emitUser.pipe(take(1)).subscribe((user) => {
+    //   this.token = user!.token!;
+    //   console.log(this.token);
+    // });
+
+    return this.http
       .get<Recipe[]>(
         'https://recipe-book-3a49f-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json'
       )
@@ -41,7 +48,7 @@ export class DataStorageService implements OnInit {
         tap((recipes) => {
           this.recipeService.setRecipesFromData(recipes);
         })
-      )
+      );
     //   .subscribe((recipes) => {
     //     this.recipeService.setRecipesFromData(recipes);
     //   });

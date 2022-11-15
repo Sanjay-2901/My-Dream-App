@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth-guard.service';
+import { AuthenticationGuard } from './authentication/auth.guard';
+import { AuthComponent } from './authentication/authentication.component';
 import { canDeactivateGuard } from './can-deactivate-guard.service';
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipesResolverService } from './recipes/recipes-resolver.service';
 import { RecipesComponent } from './recipes/recipes.component';
-import { ResolveGuard } from './resolve-guard.service';
+// import { ResolveGuard } from './resolve-guard.service';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 
 const routes: Routes = [
@@ -15,7 +17,8 @@ const routes: Routes = [
   {
     path: 'recipes',
     component: RecipesComponent,
-    resolve: { myData: ResolveGuard },
+    // resolve: { myData: ResolveGuard },
+    canActivate: [AuthenticationGuard],
 
     children: [
       { path: '', component: RecipeStartComponent },
@@ -38,6 +41,10 @@ const routes: Routes = [
     canDeactivate: [canDeactivateGuard],
     component: ShoppingListComponent,
     data: { message: 'This particular message is from route data' },
+  },
+  {
+    path: 'auth',
+    component: AuthComponent,
   },
 ];
 

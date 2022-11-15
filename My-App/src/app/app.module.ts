@@ -16,11 +16,13 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
 import { AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth.service';
 import { canDeactivateGuard } from './can-deactivate-guard.service';
-import { ResolveGuard } from './resolve-guard.service';
+// import { ResolveGuard } from './resolve-guard.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RecipeService } from './recipes/recipe.service';
 import { DataStorageService } from './shared/data-storage.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthComponent } from './authentication/authentication.component';
+import { AuthInterceptorService } from './authentication/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { HttpClientModule } from '@angular/common/http';
     DropDown,
     RecipeStartComponent,
     RecipeEditComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,9 +51,14 @@ import { HttpClientModule } from '@angular/common/http';
     AuthGuard,
     AuthService,
     canDeactivateGuard,
-    ResolveGuard,
+    // ResolveGuard,
     RecipeService,
     DataStorageService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
