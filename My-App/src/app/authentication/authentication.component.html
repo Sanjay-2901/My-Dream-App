@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center align-items-center">
+  <div class="text-center mt-5" *ngIf="isLoading">
+    <h3>Loading ...</h3>
+  </div>
+  <div class="alert alert-danger me-5" *ngIf="errorMessage">
+    <h5>{{ errorMessage }}</h5>
+  </div>
+  <form #authForm="ngForm" (submit)="onSubmit(authForm)" *ngIf="!isLoading">
+    <div>
+      <label for="email">Email</label> <br />
+      <input
+        type="email"
+        id="email"
+        ngModel
+        name="email"
+        required
+        email
+      /><br />
+    </div>
+    <div class="mt-3">
+      <label for="password">Password</label><br />
+      <input
+        type="password"
+        id="password"
+        ngModel
+        name="password"
+        required
+        minlength="6"
+      /><br />
+    </div>
+    <button
+      class="btn btn-primary mt-3"
+      [disabled]="!authForm.valid"
+      type="submit"
+    >
+      {{ isLoginMode ? "Login" : "SignUp" }}
+    </button>
+    <button
+      class="btn btn-primary mt-3 ms-3"
+      (click)="onSwitchMode()"
+      type="button"
+    >
+      Switch to {{ isLoginMode ? "Sign Up" : "Login" }}
+    </button>
+  </form>
+</div>

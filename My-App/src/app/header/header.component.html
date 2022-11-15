@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand fw-bolder" href="#">Recipe Book</a>
+    <a class="navbar-brand fw-bolder" routerLink="/recipes">Recipe Book</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -14,7 +14,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item me-5">
+        <li class="nav-item me-5" *ngIf="isAuthenticated">
           <a
             class="nav-link active fw-bold"
             routerLink="/recipes"
@@ -30,7 +30,23 @@
             >Shopping List</a
           >
         </li>
-        <li class="nav-item dropdown" myDropDown>
+        <li class="nav-item me-5" *ngIf="!isAuthenticated">
+          <a
+            class="nav-link fw-bold"
+            routerLink="/auth"
+            routerLinkActive="active1"
+            >Authenticate</a
+          >
+        </li>
+        <li class="nav-item me-5" *ngIf="isAuthenticated">
+          <a
+            class="nav-link fw-bold"
+            (click)="onLogout()"
+            routerLinkActive="active1"
+            >Logout</a
+          >
+        </li>
+        <li class="nav-item dropdown" myDropDown *ngIf="isAuthenticated">
           <a
             class="nav-link dropdown-toggle fw-bold"
             href="#"
@@ -42,8 +58,12 @@
             Manage
           </a>
           <ul class="dropdown-menu" myDropDown>
-            <li><a class="dropdown-item" (click)="onSavedata()">Save Data</a></li>
-            <li><a class="dropdown-item" (click)="onfetchData()">Fetch Data</a></li>
+            <li>
+              <a class="dropdown-item" (click)="onSavedata()">Save Data</a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="onfetchData()">Fetch Data</a>
+            </li>
           </ul>
         </li>
       </ul>
