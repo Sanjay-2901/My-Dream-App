@@ -5,8 +5,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { DropDownDirective } from './shared/dropdown.directive';
 import { HttpClientModule } from '@angular/common/http';
-import { RecipesModule } from './recipes/recipes.module';
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { AuthModule } from './authentication/auth.module';
 import { CoreModule } from './core.module';
 
@@ -16,8 +14,6 @@ import { CoreModule } from './core.module';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ShoppingListModule,
-    RecipesModule,
     AuthModule,
     CoreModule,
   ],
