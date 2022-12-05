@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Data } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { canComponentLeave } from '../can-deactivate-guard.service';
 import { Ingredient } from '../shared/ingredient.model';
-import { ShoppingListService } from './shopping-list.service';
+import { Store } from '@ngrx/store';
+import * as fromShoppingList from '../store/shopping-list.reducer';
+import * as ShoppingListActions from '../store/shopping-list.actions';
+import { ActivatedRoute, Data } from '@angular/router';
 
 @Component({
   selector: 'app-shopping-list',
@@ -12,28 +14,32 @@ import { ShoppingListService } from './shopping-list.service';
 })
 export class ShoppingListComponent implements OnInit, canComponentLeave {
   constructor(
-    private shoppingListService: ShoppingListService,
+    private store: Store<fromShoppingList.MyAppState>,
     private activatedRoute: ActivatedRoute
   ) {}
   ingredients!: Ingredient[];
   routerData!: string;
   ingredientsListSubscription!: Subscription;
+  allowleaving = false;
 
   ngOnInit(): void {
-    this.ingredients = this.shoppingListService.getIngredients();
-    this.ingredientsListSubscription =
-      this.shoppingListService.ingredientsChanged.subscribe(
-        (ingredients: Ingredient[]) => {
-          this.ingredients = ingredients;
-        }
-      );
-    // this.routerData = this.activatedRoute.snapshot.data['message'];
+    this.ingredientsListSubscription = this.store
+      .select('myShoppingList')
+      .subscribe((data) => {
+        this.ingredients = data.ingredients;
+      });
+    // this.ingredients = this.shoppingListService.getIngredients();
+    // this.ingredientsListSubscription =
+    //   this.shoppingListService.ingredientsChanged.subscribe(
+    //     (ingredients: Ingredient[]) => {
+    //       this.ingredients = ingredients;
+    //     }
+    //   );
+    this.routerData = this.activatedRoute.snapshot.data['message'];
     this.activatedRoute.data.subscribe((myData: Data) => {
       this.routerData = myData['message'];
     });
   }
-
-  allowleaving = false;
 
   canLeave(): boolean {
     if (!this.allowleaving) {
@@ -43,7 +49,7 @@ export class ShoppingListComponent implements OnInit, canComponentLeave {
   }
 
   onEditRecipe(index: number) {
-    this.shoppingListService.editIngredient.next(index);
+    this.store.dispatch(new ShoppingListActions.StartEdit(index));
   }
 
   ngOnDestroy() {

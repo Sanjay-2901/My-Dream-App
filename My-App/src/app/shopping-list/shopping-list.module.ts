@@ -14,7 +14,7 @@ import { ShoppingListComponent } from './shopping-list.component';
     FormsModule,
     RouterModule.forChild([
       {
-        path: '',
+        path: 'shopping-list',
         canActivate: [AuthGuard],
         canDeactivate: [canDeactivateGuard],
         component: ShoppingListComponent,

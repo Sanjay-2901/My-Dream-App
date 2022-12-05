@@ -6,13 +6,10 @@ import { AuthInterceptorService } from './authentication/auth-interceptor.servic
 import { canDeactivateGuard } from './can-deactivate-guard.service';
 import { RecipeService } from './recipes/recipe.service';
 import { DataStorageService } from './shared/data-storage.service';
-import { ShoppingListService } from './shopping-list/shopping-list.service';
 // import { ResolveGuard } from './resolve-guard.service';
-
 
 @NgModule({
   providers: [
-    ShoppingListService,
     AuthGuard,
     AuthService,
     canDeactivateGuard,

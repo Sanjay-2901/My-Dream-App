@@ -10,7 +10,7 @@ import { RecipesComponent } from './recipes.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'recipes',
     component: RecipesComponent,
     // resolve: { myData: ResolveGuard },
     canActivate: [AuthenticationGuard],
