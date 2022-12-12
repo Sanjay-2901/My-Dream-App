@@ -3,9 +3,9 @@ import { Subscription } from 'rxjs';
 import { canComponentLeave } from '../can-deactivate-guard.service';
 import { Ingredient } from '../shared/ingredient.model';
 import { Store } from '@ngrx/store';
-import * as fromShoppingList from '../store/shopping-list.reducer';
-import * as ShoppingListActions from '../store/shopping-list.actions';
+import * as ShoppingListActions from './store/shopping-list.actions';
 import { ActivatedRoute, Data } from '@angular/router';
+import * as fromApp from '../store/app.reducer';
 
 @Component({
   selector: 'app-shopping-list',
@@ -14,7 +14,7 @@ import { ActivatedRoute, Data } from '@angular/router';
 })
 export class ShoppingListComponent implements OnInit, canComponentLeave {
   constructor(
-    private store: Store<fromShoppingList.MyAppState>,
+    private store: Store<fromApp.AppState>,
     private activatedRoute: ActivatedRoute
   ) {}
   ingredients!: Ingredient[];

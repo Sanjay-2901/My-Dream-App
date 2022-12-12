@@ -8,7 +8,7 @@ import { DropDownDirective } from './shared/dropdown.directive';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthModule } from './authentication/auth.module';
 import { CoreModule } from './core.module';
-import { reducers } from './store/shopping-list.reducer';
+import * as fromApp from './store/app.reducer';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, DropDownDirective],
@@ -16,7 +16,7 @@ import { reducers } from './store/shopping-list.reducer';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot(reducers),
+    StoreModule.forRoot(fromApp.reducers),
     AuthModule,
     CoreModule,
   ],

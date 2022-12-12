@@ -1,5 +1,4 @@
-import { ActionReducerMap } from '@ngrx/store';
-import { Ingredient } from '../shared/ingredient.model';
+import { Ingredient } from '../../shared/ingredient.model';
 import * as ShoppingListActions from './shopping-list.actions';
 import { ShoppingListActionsTypes } from './shopping-list.actions';
 
@@ -8,15 +7,6 @@ export interface InitialStateInterface {
   editedIngredient: Ingredient | null;
   editedIngredientIndex: number;
 }
-
-export interface MyAppState {
-  myShoppingList: InitialStateInterface;
-}
-
-export const reducers: ActionReducerMap<MyAppState, ShoppingListActionsTypes> =
-  {
-    myShoppingList: shoppingListReducer,
-  };
 
 const initialState: InitialStateInterface = {
   ingredients: [new Ingredient('Apple', 5), new Ingredient('Orange', 10)],
@@ -27,7 +17,7 @@ const initialState: InitialStateInterface = {
 export function shoppingListReducer(
   state: InitialStateInterface = initialState,
   action: ShoppingListActionsTypes
-): InitialStateInterface {
+): any {
   switch (action.type) {
     case ShoppingListActions.ADD_INGREDIENT:
       return {

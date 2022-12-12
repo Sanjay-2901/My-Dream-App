@@ -4,6 +4,9 @@ import { catchError, tap } from 'rxjs/operators';
 import { throwError, BehaviorSubject, Subject } from 'rxjs';
 import { User } from './user.model';
 import { Router } from '@angular/router';
+import * as fromApp from '../store/app.reducer';
+import { Store } from '@ngrx/store';
+import * as AuthActions from './store/auth.action';
 
 export interface AuthResponseData {
   idToken: string;
@@ -16,10 +19,14 @@ export interface AuthResponseData {
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  emitUser = new BehaviorSubject<User | null>(null);
+  // emitUser = new BehaviorSubject<User | null>(null);
   private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private store: Store<fromApp.AppState>
+  ) {}
 
   //==============================================================
 
@@ -74,7 +81,8 @@ export class AuthenticationService {
   //==============================================================
 
   logOut() {
-    this.emitUser.next(null);
+    // this.emitUser.next(null);
+    this.store.dispatch(new AuthActions.logout());
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
     if (this.tokenExpirationTimer) {
@@ -119,10 +127,13 @@ export class AuthenticationService {
     expiresIn: number
   ) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    const user = new User(email, userId, token, expirationDate);
-    this.emitUser.next(user);
+    const loadedUser = new User(email, userId, token, expirationDate);
+    // this.emitUser.next(user);
+    this.store.dispatch(
+      new AuthActions.login({ email, userId, token, expirationDate })
+    );
     this.autoLogout(expiresIn * 1000);
-    localStorage.setItem('userData', JSON.stringify(user));
+    localStorage.setItem('userData', JSON.stringify(loadedUser));
   }
 
   //==============================================================
@@ -140,7 +151,15 @@ export class AuthenticationService {
       new Date(userData._tokenExpirationDate)
     );
     if (loadedUser.token) {
-      this.emitUser.next(loadedUser);
+      // this.emitUser.next(loadedUser);
+      this.store.dispatch(
+        new AuthActions.login({
+          email: loadedUser.email,
+          userId: loadedUser.email,
+          token: loadedUser.token,
+          expirationDate: new Date(userData._tokenExpirationDate),
+        })
+      );
       const expirationDuration =
         new Date(userData._tokenExpirationDate).getTime() -
         new Date().getTime();

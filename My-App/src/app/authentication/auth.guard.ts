@@ -8,14 +8,12 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { AuthenticationService } from './authentication.service';
+import * as fromApp from '../store/app.reducer';
+import { Store } from '@ngrx/store';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationGuard implements CanActivate {
-  constructor(
-    private authenticationService: AuthenticationService,
-    private router: Router
-  ) {}
+  constructor(private router: Router, private store: Store<fromApp.AppState>) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -24,8 +22,13 @@ export class AuthenticationGuard implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    return this.authenticationService.emitUser.pipe(
+    return this.store.select('myAuth').pipe(
       take(1),
+
+      map((authState) => {
+        return authState.user;
+      }),
+
       map((emittedUser) => {
         if (emittedUser) {
           return true;
